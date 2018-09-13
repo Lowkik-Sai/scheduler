@@ -4,7 +4,17 @@ const Discord = require("Discord.js");
 const fs = require("fs");
 const bot = new Discord.Client({DisableEveryone: true});
 bot.commands = new Discord.Collection();
-const embed = require("./Schedule/boss.js")
+const dimembed = require("./Schedule/dim.js");
+const karandaembed = require("./Schedule/karanda.js");
+const kzarkaembed = require("./Schedule/Kzarka.js");
+const nouverembed = require("./Schedule/Nouver.js");
+const offinembed = require("./Schedule/Offin.js");
+const quintembed = require("./Schedule/Quint.js");
+const vellembed = require("./Schedule/Vell.js");
+const kutumembed = require("./Schedule/boss.js");
+
+
+
 // const Enmap = require("enmap");
 // const EnmapLevel = require('enmap-level');
 // const sql = require('better-sqlite-pool');
@@ -325,17 +335,17 @@ var Kzarka7 = cron.schedule('50 18 * * 5,6', () =>  {
 
 start: true,
 scheduled: true,
-timeZone: 'Europe/Athens'
+timeZone: 'Europe/Madrid'
 });
-var Kzarka8 = cron.schedule('5 22 * * 1,2,3,5,7', () =>  {
-  let Kzarka8 = require('./Schedule/Kzarka.js');
-  bot.channels.get("422437762893873172").send({embed: kzarka});
+var Kzarka8 = cron.schedule('05 22 * * 1,2,3,5,7', () =>  {
+  let Kzarka = require('./Schedule/Kzarka.js');
+  bot.channels.get("422437762893873172").send({embed: Kzarka});
   console.log('Boss Spawn');
 }, {
 
 start: true,
 scheduled: true,
-timeZone: 'Europe/Athens'
+timeZone: 'Europe/Madrid'
 });
 
 //     //Nouver
