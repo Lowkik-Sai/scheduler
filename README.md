@@ -11,3 +11,8 @@ The jobs will action depending on the system time of the bot, currently there se
 
 
 Bot written in discord.js 
+
+
+time and date format in the cron job are as follows cron.schedule('minute hour date month dayoftheweek', () => {}
+
+dayoftheweek is a number 0-7 0 and 7 are Sunday, Monday is 1 the rest follow suit. To use multiple days sperate with a comma. e.g 1,2,3 will run a job on monday, tuesday, wednesday. 
