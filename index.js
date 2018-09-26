@@ -4,63 +4,19 @@ const Discord = require("Discord.js");
 const fs = require("fs");
 const bot = new Discord.Client({DisableEveryone: true});
 bot.commands = new Discord.Collection();
-const dimembed = require("./Schedule/dim.js");
-const karandaembed = require("./Schedule/karanda.js");
-const kzarkaembed = require("./Schedule/Kzarka.js");
-const nouverembed = require("./Schedule/Nouver.js");
-const offinembed = require("./Schedule/Offin.js");
-const quintembed = require("./Schedule/Quint.js");
-const vellembed = require("./Schedule/Vell.js");
-const kutumembed = require("./Schedule/boss.js");
-
-
-
-// const Enmap = require("enmap");
-// const EnmapLevel = require('enmap-level');
-// const sql = require('better-sqlite-pool');
-// //const myEnmap = new Enmap({name: "users"});
-// // non-cached, auto-fetch enmap: 
-// const myEnmap = new Enmap({
-//   name: "user",
-//   persistent: true,
-//   autoFetch: true,
-//   fetchAll: true
-// });
-// myEnmap.set("userar", {
-//   ids: "",
-  
-// });
-// myEnmap.defer.then( () => {
-//     console.log(myEnmap.size + " keys loaded");
-//   });
-  
-// module.exports = {
-//   myEnmap
-// }
-
-
-// bot.on("ready", () => {
-
-//   const fetch = myEnmap.fetchEverything();
-//   for (let i = 0; i < fetch.length; i++) {
-//     console.log(fetch[i]);
-//   }
-   
-//   // console.log(fetch);
-//   // bot.users.get(fetch).send("someMessage");
-// })
-
+const Enmap = require("enmap")
 
 bot.on("ready", async () => {
     console.log(`${bot.user.username} is online!`);
     bot.user.setActivity("Black Desert Online", {type: "PLAYING"});;
 });
+
 fs.readdir("./commands/", (err, files) => {
     if (err) return console.error(err);
     files.forEach(file => {
       let eventFunction = require(`./commands/${file}`);
       let eventName = file.split(".")[0];
-      // super-secret recipe to call events with all their proper arguments *after* the `client` var.
+    
       bot.on(eventName, (...args) => eventFunction.run(bot, ...args));
     });
   });
@@ -69,11 +25,11 @@ fs.readdir("./commands/", (err, files) => {
     if (message.author.bot) return;
     if(message.content.indexOf(botconfig.prefix) !== 0) return;
   
-    // This is the best way to define args. Trust me.
+
     const args = message.content.slice(botconfig.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
   
-    // The list of if/else is replaced with those simple 2 lines:
+
     try {
       let commandFile = require(`./commands/${command}.js`);
       commandFile.run(bot, message, args);
@@ -81,39 +37,14 @@ fs.readdir("./commands/", (err, files) => {
       console.error(err);
     }
   });
-    // fs.readdir("./commands/", (err, files) => {
 
-    //     if(err) console.log(err);
 
-    //     let jsfile = files.filter(f => f.split(".").pop() === "js")
-    //     if(jsfile.length <= 0) {
-    //         console.log("Couldn't find commands.");
-    //         return;
-    //     }
 
-    //     jsfile.forEach((f, i) =>{
-    //         let props = require(`./commands/${f}`);
-    //         console.log(`${f} loaded!`);
-    //         bot.commands.set(props.help.name, props);
-    //     })
-    // })
-
-    // bot.on("message", async message =>{
-
-    // let prefix = botconfig.prefix;
-    // let messageArray = message.content.split(" ");
-    // let cmd = messageArray[0];
-    // let args  = messageArray.slice(1);
-
-    // let commandfile = bot.commands.get(cmd.slice(prefix.length));
-    //     if(commandfile) commandfile.run(bot,message,args);
-    
-    // });
-    
+ 
     
     //Kutum
     const cron = require('node-cron');
-   // var schedule = require('node-schedule');
+    var schedule = require('node-schedule');
 
     var task = cron.schedule('05 00 * * 1,3,7', () =>  {
         let kutum = require('./Schedule/boss.js');
@@ -265,7 +196,7 @@ scheduled: true,
 
 });
 //     //Kzarka
-var Kzarka1 = cron.schedule('05 00 * * 4,5', () =>  {
+var Kzarka1 = cron.schedule('05 00 * * 5', () =>  {
   let Kzarka = require('./Schedule/Kzarka.js');
   bot.channels.get(botconfig.channel).send({embed: Kzarka});
   console.log('Boss Spawn');
@@ -275,7 +206,7 @@ start: true,
 scheduled: true,
 
 });
-var Kzarka2 = cron.schedule('50 1 * * 0', () =>  {
+var Kzarka2 = cron.schedule('50 01 * * 0', () =>  {
   let Kzarka = require('./Schedule/Kzarka.js');
   bot.channels.get(botconfig.channel).send({embed: Kzarka});
   console.log('Boss Spawn');
@@ -286,7 +217,7 @@ scheduled: true,
 
 });
         
-var Kzarka3 = cron.schedule('50 4 * * 1,2,3', () =>  {
+var Kzarka3 = cron.schedule('50 04 * * 1,2,3', () =>  {
   let Kzarka = require('./Schedule/Kzarka.js');
   bot.channels.get(botconfig.channel).send({embed: Kzarka});
   console.log('Boss Spawn');
@@ -297,7 +228,7 @@ scheduled: true,
 
 });
      
-var Kzarka4 = cron.schedule('50 8 * * 1', () =>  {
+var Kzarka4 = cron.schedule('50 08 * * 1', () =>  {
   let Kzarka = require('./Schedule/Kzarka.js');
   bot.channels.get(botconfig.channel).send({embed: Kzarka});
   console.log('Boss Spawn');
@@ -349,7 +280,7 @@ timeZone: 'Europe/Madrid'
 });
 
 //     //Nouver
-var Nouver1 = cron.schedule('0 5 * * 4,7', () =>  {
+var Nouver1 = cron.schedule('05 00 * * 4,7', () =>  {
   let Nouver = require('./Schedule/Nouver.js');
   bot.channels.get(botconfig.channel).send({embed: Nouver});
   console.log('Boss Spawn');
@@ -359,7 +290,7 @@ start: true,
 scheduled: true,
 
 });
-var Nouver2 = cron.schedule('50 1 * * 5', () =>  {
+var Nouver2 = cron.schedule('50 01 * * 5', () =>  {
   let Nouver = require('./Schedule/Nouver.js');
   bot.channels.get(botconfig.channel).send({embed: Nouver});
   console.log('Boss Spawn');
@@ -370,7 +301,7 @@ scheduled: true,
 
 });
         
-var Nouver3 = cron.schedule('50 4 * * 4,6', () =>  {
+var Nouver3 = cron.schedule('50 04 * * 4,6', () =>  {
   let Nouver = require('./Schedule/Nouver.js');
   bot.channels.get(botconfig.channel).send({embed: Nouver});
   console.log('Boss Spawn');
@@ -380,7 +311,7 @@ start: true,
 scheduled: true,
 
 });
-var Nouver4 = cron.schedule('50 8 * * 0', () =>  {
+var Nouver4 = cron.schedule('50 08 * * 0', () =>  {
   let Nouver = require('./Schedule/Nouver.js');
   bot.channels.get(botconfig.channel).send({embed: Nouver});
   console.log('Boss Spawn');
@@ -431,7 +362,7 @@ scheduled: true,
 });
 
 //     //Offin
-var Offin1 = cron.schedule('50 1 * * 6', () =>  {
+var Offin1 = cron.schedule('50 01 * * 6', () =>  {
   let Offin = require('./Schedule/Offin.js');
   bot.channels.get(botconfig.channel).send({embed: Offin});
   console.log('Boss Spawn');
